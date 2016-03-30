@@ -3,12 +3,11 @@ var path = require('path')
 
 
 module.exports = {
-    cache:true,
     //entry: "./client/Index.jsx",
     entry: {
         'main':[
-            "webpack-hot-middleware/client?reload=true",
-            "./src/index.js"
+            'webpack-hot-middleware/client?reload=true',
+            './src/index.js'
         ]
     },
     output: {
@@ -22,7 +21,7 @@ module.exports = {
             {
                 test: /[\.jsx|\.js ]$/,
                 exclude: /node_modules/,
-                loader: "babel-loader"
+                loader: 'babel-loader'
             },
             {
                 test: /\.styl$/,
@@ -35,11 +34,13 @@ module.exports = {
             {test: /\.(png|jpg|gif)$/, loader: 'url-loader'}
         ]
     },
+    devtool: 'cheap-module-eval-source-map',
+
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.SourceMapDevToolPlugin(
             '[file].map', null,
-            "[absolute-resource-path]", "[absolute-resource-path]")
+            '[absolute-resource-path]", "[absolute-resource-path]')
     ]
 }

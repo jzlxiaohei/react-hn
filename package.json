@@ -7,10 +7,12 @@
     "lint": "eslint src",
     "dev": "webpack-dev-server --port 9527 --host 127.0.0.1 --config webpack.config.dev.js ",
     "build": " babel src/index.js -o build/index.js",
-    "test": "mocha test"
+    "test": "mocha test --compilers js:babel-register"
   },
   "author": "",
   "dependencies": {
+    "es6-promise": "^3.1.2",
+    "firebase": "^2.4.2",
     "react": "^0.14.8",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.1",
@@ -32,8 +34,10 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.6.5",
     "chai": "^3.5.0",
+    "chai-spies": "^0.7.1",
     "eslint": "^2.3.0",
     "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-babel": "^3.1.0",
     "eslint-plugin-react": "^4.2.0",
     "express": "^4.13.4",
     "flow-bin": "^0.22.1",

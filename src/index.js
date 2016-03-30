@@ -1,10 +1,7 @@
 // @flow
+import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 
-var a:number = 2;
-
-console.log(a)
-
-ReactDOM.render(<App/>,document.body)
+ReactDOM.render(<App/>, document.body)
