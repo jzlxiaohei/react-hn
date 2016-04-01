@@ -4,19 +4,26 @@
 
 // @flow
 
-const React = require('react')
+import './stylus/app.styl'
+import React  from 'react'
+import {Link} from 'react-router'
 
-
-class App extends React.Component{
+const App = React.createClass({
 
     render() {
         return (
-            <div style={{width: 400, margin: '0 auto 100px'}}>
-                <div>333</div>
-                <div>222</div>
+            <div className="main-content">
+                <header>
+                    <div className="header-bar">
+                        <Link to="/" style={{fontWeight:'bold'}}>HackerNews</Link>
+                    </div>
+                </header>
+                <div className="app-content">
+                    {this.props.children}
+                </div>
             </div>
         )
     }
-}
+})
 
 export default App

@@ -56,6 +56,13 @@ const FirebaseService = {
     },
     getItems(ids){
         return Promise.all(ids.map((id) => FirebaseService.getItem(id)))
+    },
+    getUser(id){
+        return new Promise((resolve,reject)=>{
+            api.child(`user/${id}`).once('value',snapshot => {
+                resolve(snapshot.val())
+            },reject)
+        })
     }
 }
 

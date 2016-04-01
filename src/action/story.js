@@ -7,10 +7,7 @@
 import FbServices from '../services/firebase'
 import config from '../config'
 
-/**
- *
- */
-
+/** 加载top story id 相关的action  **/
 export const TopStoriesIdsAction = {
     value: {
         req: 'TopStoriesIds_req',
@@ -47,6 +44,8 @@ export function loadTopStoriesIds() {
     }
 }
 
+
+/*** 加载 stories相关的action ***/
 export const StoriesAction = {
     value: {
         req: 'Stories_req',
@@ -56,25 +55,31 @@ export const StoriesAction = {
     func: {
         req(){
             return {
-                type: TopStoriesIdsAction.value.req
+                type: StoriesAction.value.req
             }
         },
         req_success(stories, page){
             return {
-                type: TopStoriesIdsAction.value.req_success,
+                type: StoriesAction.value.req_success,
                 page,
                 stories
             }
         },
         req_fail(err){
             return {
-                type: TopStoriesIdsAction.value.req_fail,
+                type: StoriesAction.value.req_fail,
                 err
             }
         }
     }
 }
 
+
+/**
+ * 分页加载 story
+ * @param page 页号
+ * @returns {function()} redux-thunk 异步处理
+ */
 export function loadStoriesByPage(page) {
     page = page || 1
     return (dispatch, getState) => {
@@ -82,9 +87,58 @@ export function loadStoriesByPage(page) {
 
         dispatch(sa.req())
         return FbServices.getStoriesByPage('topstories', page, config.storiesPerPage)
-            .then((stories) => {
-                dispatch(sa.req_success(stories, page))
-            })
+            .then((stories) => {dispatch(sa.req_success(stories, page))})
             .catch((err) => dispatch(sa.req_fail(err)))
+    }
+}
+
+export function loadFirstPageStories() {
+    return (dispatch, getState) => {
+        const state = getState()
+        if (state.storyList.stories.length == 0) {
+            return loadStoriesByPage()(dispatch, getState)
+        }
+    }
+}
+
+
+export const UserAction = {
+    value: {
+        req: 'User_req',
+        req_success: 'User_req_success',
+        req_fail: 'User_req_fail'
+    },
+    func: {
+        req(){
+            return {
+                type: UserAction.value.req
+            }
+        },
+        req_success(user){
+            return {
+                type: UserAction.value.req_success,
+                user
+            }
+        },
+        req_fail(err){
+            return {
+                type: UserAction.value.req_fail,
+                err
+            }
+        }
+    }
+}
+
+/**
+ * 根据id 加载user
+ * @param id userId
+ */
+export function loadUser(id) {
+    return (dispatch, getState)=> {
+        const ua = UserAction.func
+        dispatch(ua.req())
+        return FbServices.getUser(id)
+            .then(user => dispatch(ua.req_success(user)))
+            .catch(err => dispatch(ua.req))
     }
 }
