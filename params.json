@@ -1,0 +1,6 @@
+{
+  "name": "React-hn",
+  "tagline": "build hacker news using react and other new tech",
+  "body": "### simple hacker news page\r\nuses: `react(dev) react-lite(prod) react-router redux react-redux`\r\n\r\n1. 开发时使用react，发布使用react-lite，减少文件体积\r\n2. android上，动画可能会导致`componentDidMount`不执行（原因暂不知），所以去掉了转场动画\r\n3. story 列表页的滚动记录\r\n\r\n4. TODO: `unit test`，`propType`检测\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
