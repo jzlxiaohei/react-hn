@@ -30,16 +30,9 @@ const FirebaseService = {
             }
         })
     },
-    getStoriesByPage: async function (path, page, limit) {
-        try{
-            const allIds = await FirebaseService.getStoryIds(path)
-            const start = (page - 1) * limit
-            const end = page * limit
-            const ids = allIds.slice(start, end)
-            return FirebaseService.getItems(ids)
-        } catch (e){
-            return Promise.reject(e)   
-        }
+    getStoriesByPage: function (path, page, limit) {
+        return FirebaseService.getStoryIds(path)
+            .then(ids=> FirebaseService.getItems(ids))
     },
     getItem(id){
         return new Promise((resolve, reject) => {

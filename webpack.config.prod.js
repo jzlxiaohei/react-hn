@@ -1,12 +1,13 @@
 var webpack = require('webpack')
 var path = require('path')
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var autoprefixer = require('autoprefixer');
+var precss       = require('precss');
 
 module.exports = {
-    //entry: "./client/Index.jsx",
+    //entry: './client/Index.jsx',
     entry: {
         'main':[
-            'webpack-hot-middleware/client',
             './src/index.js'
         ]
     },
@@ -21,18 +22,7 @@ module.exports = {
             {
                 test: /[\.jsx|\.js ]$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query:{
-                    plugins:[
-                        ['react-transform', {
-                            transforms: [{
-                                transform : 'react-transform-hmr',
-                                imports   : ['react'],
-                                locals    : ['module']
-                            }]
-                        }]
-                    ]
-                }
+                loader: 'babel-loader'
             },
             {
                 test: /\.styl$/,
@@ -46,12 +36,27 @@ module.exports = {
         ]
     },
     devtool: 'cheap-module-eval-source-map',
-
+    resolve: {
+        alias: {
+            'react': 'react-lite',
+            'react-dom': 'react-lite'
+        }
+    },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
-        new webpack.SourceMapDevToolPlugin(
-            '[file].map', null,
-            '[absolute-resource-path]", "[absolute-resource-path]')
-    ]
+        new ExtractTextPlugin('[name].css?v=[chunkhash]'),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+           compressor: {
+               warnings: false
+           }
+        })
+    ],
+    postcss: function () {
+        return [autoprefixer, precss];
+    },
 }

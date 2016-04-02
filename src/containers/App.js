@@ -16,6 +16,7 @@ const App = React.createClass({
                 <header>
                     <div className="header-bar">
                         <Link to="/" style={{fontWeight:'bold'}}>HackerNews</Link>
+                        <a href="https://github.com/jzlxiaohei/react-hn" style={{float:'right'}}>source (github)</a>
                     </div>
                 </header>
                 <div className="app-content">
