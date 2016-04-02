@@ -31,7 +31,7 @@ const Comments = React.createClass({
     innerDispatch(action){
         if (action.type == CommentsAction.value.req_success) {
             const comments = action.comments
-            this.setState({comments: comments})
+            this.setState({comments})
         }
     },
 

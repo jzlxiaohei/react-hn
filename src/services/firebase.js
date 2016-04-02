@@ -30,7 +30,7 @@ const FirebaseService = {
             }
         })
     },
-    getStoriesByPage: function (path, page, limit) {
+    getStoriesByPage(path, page, limit){
         return FirebaseService.getStoryIds(path)
             .then(allIds => {
                 const start = (page - 1) * limit
@@ -56,10 +56,10 @@ const FirebaseService = {
         return Promise.all(ids.map((id) => FirebaseService.getItem(id)))
     },
     getUser(id){
-        return new Promise((resolve,reject)=>{
-            api.child(`user/${id}`).once('value',snapshot => {
+        return new Promise((resolve, reject)=> {
+            api.child(`user/${id}`).once('value', snapshot => {
                 resolve(snapshot.val())
-            },reject)
+            }, reject)
         })
     }
 }
