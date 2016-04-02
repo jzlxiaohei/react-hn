@@ -12,8 +12,8 @@ const User = React.createClass({
         const isLoading = this.props.isLoading
 
         return (
-            <div>
-                <table className={isLoading?'hide':''} style={{color:'#999',marginTop:'10px'}}>
+            <div style={{color:'#999',margin:'10px 0 0 10px'}}>
+                <table className={isLoading?'hide':''} >
                     <tbody>
                     <tr>
                         <td>user:</td>

@@ -23,7 +23,6 @@ const store =  configStore({
         isLoading:true
     }
 })
-
 ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory}>

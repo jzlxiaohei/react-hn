@@ -15,6 +15,7 @@ function storyList(state={} , action) {
             return assign({}, state, {isLoading: true})
 
         case StoriesAction.value.req_success:
+
             return assign({}, state, {
                 stories: state.stories.concat(action.stories),
                 isLoading: false,

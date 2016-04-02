@@ -32,7 +32,12 @@ const FirebaseService = {
     },
     getStoriesByPage: function (path, page, limit) {
         return FirebaseService.getStoryIds(path)
-            .then(ids=> FirebaseService.getItems(ids))
+            .then(allIds => {
+                const start = (page - 1) * limit
+                const end = page * limit
+                const ids = allIds.slice(start, end)
+                return FirebaseService.getItems(ids)
+            })
     },
     getItem(id){
         return new Promise((resolve, reject) => {

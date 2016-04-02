@@ -9,8 +9,7 @@ import ListComponent from '../components/storyList'
 // import {StoriesAction} from '../action/story'
 import {connect} from 'react-redux';
 import {loadFirstPageStories} from '../action/story'
-import transitionHoc from '../utils/transitionHoc'
-// var a = loadStoriesByPage()
+import EasyTransitionWrapper from './EasyTransitionWrapper'
 
 const StoryListContainer = React.createClass({
 
@@ -29,12 +28,13 @@ const StoryListContainer = React.createClass({
     render(){
         const storyListProps = this.props.storyList
         const stories = storyListProps.stories
+
         return (
-
-            transitionHoc(<ListComponent dispatch={this.props.dispatch}
-                                         stories={stories} isLoading={storyListProps.isLoading}
-                                         page={storyListProps.page}/>)
-
+            <EasyTransitionWrapper>
+                <ListComponent dispatch={this.props.dispatch}
+                               stories={stories} isLoading={storyListProps.isLoading}
+                               page={storyListProps.page}/>
+            </EasyTransitionWrapper>
         )
     }
 })

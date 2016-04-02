@@ -7,7 +7,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import UserComponent from '../components/user'
 import {loadUser} from '../action/user'
-import transitionHoc from '../utils/transitionHoc'
+import EasyTransitionWrapper from './EasyTransitionWrapper'
 
 
 const UserContainer = React.createClass({
@@ -22,9 +22,9 @@ const UserContainer = React.createClass({
         const props = this.props
 
         return (
-            transitionHoc(
+            <EasyTransitionWrapper>
                 <UserComponent user={props.user} isLoading={props.isLoading}/>
-            )
+            </EasyTransitionWrapper>
         )
     }
 })

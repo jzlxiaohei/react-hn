@@ -7,7 +7,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import StoryDetail from '../components/story'
-import transitionHoc from '../utils/transitionHoc'
+import EasyTransitionWrapper from './EasyTransitionWrapper'
 
 import {loadCurrentStory} from '../action/story'
 const CommentsContainer = React.createClass({
@@ -30,9 +30,9 @@ const CommentsContainer = React.createClass({
             isLoading = this.props.isLoading
 
         return (
-            transitionHoc(
+           <EasyTransitionWrapper>
                 <StoryDetail story={story} isLoading={isLoading}/>
-            )
+           </EasyTransitionWrapper>
         )
     }
 })
