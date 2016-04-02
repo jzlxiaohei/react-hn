@@ -30,7 +30,7 @@ const StoryList = React.createClass({
     
     render(){
         const stories = this.props.stories
-        var lis = stories.map((sItem)=> {
+        const lis = stories.map((sItem)=> {
             return (
                 <li key={sItem.id} className="story-list-item">
                     <div className="sli-content">
@@ -43,8 +43,9 @@ const StoryList = React.createClass({
                             </a>
                         </div>
                         <div className="sli-extra-info">
-                            {sItem.score} points by {sItem.by} {utils.time.formatFromNow(sItem.time)}
-                            | {sItem.kids ? sItem.kids.length : 0} comments
+                            {sItem.score} points by <Link to={`/user/${sItem.by}`}>{sItem.by}</Link> {utils.time.formatFromNow(sItem.time)}
+
+                            | <Link to={`/story/${sItem.id}`}> {sItem.descendants>0 ? sItem.descendants + 'comments' : 'discuss'} </Link>
                         </div>
                     </div>
                 </li>

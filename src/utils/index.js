@@ -30,9 +30,41 @@ const utils = {
     },
     urlParse(href){
         //dom based!!
-        var aEle = document.createElement('a')
+        const aEle = document.createElement('a')
         aEle.href = href
         return aEle
+    },
+    //记录列表页的滚动位置
+    scroll:createScrollMgr()
+}
+
+function createScrollMgr() {
+    const scrollMap = {}
+
+    return {
+        restoreScroll(key){
+            if (!(key in scrollMap)) {
+                scrollMap[key] = {
+                    x: 0,
+                    y: 0
+                }
+            }
+            const _s = scrollMap[key]
+            const x = _s.x,
+                y = _s.y;
+            setTimeout(function () {
+                window.scrollTo(x, y);
+            }, 0)
+        },
+        setScroll(key){
+            scrollMap[key] = {
+                x: window.pageXOffset || document.documentElement.scrollLeft,
+                y: window.pageYOffset || document.documentElement.scrollTop
+            }
+        },
+        deleteScroll(key){
+            delete scrollMap[key];
+        }
     }
 }
 

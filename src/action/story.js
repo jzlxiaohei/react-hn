@@ -87,7 +87,9 @@ export function loadStoriesByPage(page) {
 
         dispatch(sa.req())
         return FbServices.getStoriesByPage('topstories', page, config.storiesPerPage)
-            .then((stories) => {dispatch(sa.req_success(stories, page))})
+            .then((stories) => {
+                dispatch(sa.req_success(stories, page))
+            })
             .catch((err) => dispatch(sa.req_fail(err)))
     }
 }
@@ -102,43 +104,40 @@ export function loadFirstPageStories() {
 }
 
 
-export const UserAction = {
+export const CurrentStoryAction = {
     value: {
-        req: 'User_req',
-        req_success: 'User_req_success',
-        req_fail: 'User_req_fail'
+        req: 'CurrentStory_req',
+        req_success:'CurrentStory_req_success',
+        req_fail:'CurrentStory_req_fail'
     },
     func: {
         req(){
             return {
-                type: UserAction.value.req
+                type: CurrentStoryAction.value.req,
             }
         },
-        req_success(user){
+        req_success(story){
             return {
-                type: UserAction.value.req_success,
-                user
+                type: CurrentStoryAction.value.req_success,
+                story
             }
         },
         req_fail(err){
             return {
-                type: UserAction.value.req_fail,
+                type: CurrentStoryAction.value.req_fail,
                 err
             }
         }
     }
 }
 
-/**
- * 根据id 加载user
- * @param id userId
- */
-export function loadUser(id) {
-    return (dispatch, getState)=> {
-        const ua = UserAction.func
-        dispatch(ua.req())
-        return FbServices.getUser(id)
-            .then(user => dispatch(ua.req_success(user)))
-            .catch(err => dispatch(ua.req))
+export function loadCurrentStory(id) {
+    return (dispatch,getState) => {
+        const csf = CurrentStoryAction.func
+        dispatch(csf.req())
+        return FbServices.getItem(id)
+            .then(story => dispatch(csf.req_success(story)))
+            .catch(err => dispatch(csf.req_fail(err)))
     }
 }
+

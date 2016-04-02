@@ -10,7 +10,7 @@ const api = new Firebase('https://hacker-news.firebaseio.com/v0')
 
 //TODO need to delete to avoid memory leak?
 const Cache = {
-    stories: {},
+    items: {},
     topStoryIds: []
 }
 
@@ -43,12 +43,12 @@ const FirebaseService = {
     },
     getItem(id){
         return new Promise((resolve, reject) => {
-            if (Cache.stories[id]) {
-                resolve(Cache.stories[id])
+            if (Cache.items[id]) {
+                resolve(Cache.items[id])
             } else {
                 api.child(`item/${id}`).once('value', (snapshot) => {
                     const story = snapshot.val()
-                    Cache.stories[id] = story
+                    Cache.items[id] = story
                     resolve(story)
                 }, reject)
             }

@@ -4,7 +4,7 @@
 
 // @flow
 
-import './stylus/app.styl'
+import './app.styl'
 import React  from 'react'
 import {Link} from 'react-router'
 
@@ -19,7 +19,8 @@ const App = React.createClass({
                     </div>
                 </header>
                 <div className="app-content">
-                    {this.props.children}
+                   
+                        {this.props.children}
                 </div>
             </div>
         )
