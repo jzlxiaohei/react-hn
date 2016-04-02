@@ -7,7 +7,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import UserComponent from '../components/user'
 import {loadUser} from '../action/user'
-import EasyTransition from 'react-easy-transition'
+import transitionHoc from '../utils/transitionHoc'
+
 
 const UserContainer = React.createClass({
 
@@ -21,13 +22,9 @@ const UserContainer = React.createClass({
         const props = this.props
 
         return (
-            <EasyTransition path={location.pathname}
-                            initialStyle={{opacity: 0}}
-                            transition="opacity 0.3s ease-in"
-                            finalStyle={{opacity: 1}}
-            >
+            transitionHoc(
                 <UserComponent user={props.user} isLoading={props.isLoading}/>
-            </EasyTransition>
+            )
         )
     }
 })
