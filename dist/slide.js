@@ -36,14 +36,22 @@ var MySlide = function () {
   }
 
   _createClass(MySlide, [{
+    key: 'setSpeed',
+    value: function setSpeed(speed) {
+      var _speed = speed === undefined ? this.speed : speed;
+      var element = this.element;
+      var style = element.style;
+      style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = _speed + 'ms';
+    }
+  }, {
     key: 'setup',
     value: function setup() {
       var _this = this;
 
       //container width,
+      this.setSpeed();
       var element = this.element;
       var style = element.style;
-      style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = this.speed + 'ms';
       style.width = this.elementWidth + 'px';
 
       for (var i = 0; i < element.children.length; i++) {
@@ -76,6 +84,7 @@ var MySlide = function () {
       if (event.touches.length > 1 || event.scale && event.scale !== 1) return;
       //if(options.disableScroll)
 
+      // this.setSpeed(0)
       var touches = event.touches[0];
       var start = this.start;
       var delta = this.delta = {
@@ -98,6 +107,7 @@ var MySlide = function () {
   }, {
     key: 'onTouchend',
     value: function onTouchend(event) {
+      // this.setSpeed()
       var delta = this.delta;
       var duration = +new Date() - this.start.time;
 
