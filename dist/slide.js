@@ -186,7 +186,7 @@ var slide1 = new MySlide(container, {
   elementWidth: width,
   slideWidth: width / 4,
   validIndexRange: [0, 4 - 1], //[0,-3]
-  speed: 0,
+  speed: 100,
   moveCallback: function moveCallback(delta) {
     slide2.move(-delta.x * 4);
   },
@@ -199,7 +199,7 @@ var slide2 = new MySlide(container2, {
   slidesNum: 4,
   elementWidth: width * 4,
   slideWidth: width,
-  speed: 0,
+  speed: 100,
   // validIndexRange:[-3,0],
   moveCallback: function moveCallback(delta) {
     slide1.move(-delta.x / 4);
