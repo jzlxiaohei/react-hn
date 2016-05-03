@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+
+  <title>Home</title>
+</head>
+<body>
+  <style>
+    body{
+      -webkit-overflow-scrolling:touch;
+    }
+    *{
+      margin:0;
+      padding: 0;
+    }
+    .swipe-wrap{
+      position: relative;
+      overflow: hidden;
+    }
+    .slide{
+      position: relative;
+      height: 200px;
+      float: left;
+      width: 100%;
+    }
+    #app,#app2{
+      visibility: hidden;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+    .circle{
+      width: 30px;
+      height: 30px;
+      border-radius: 80%;
+      background: #008080;
+      margin: 0 auto;
+    }
+    .slide img{
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+  <div id="app">
+    <div class="swipe-wrap">
+      <div class="slide">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="app2">
+    <div class="swipe-wrap">
+      <div class="slide">
+        <img src="tx.jpg">
+      </div>
+      <div class="slide">
+        <img src="tx.jpg">
+      </div>
+      <div class="slide">
+        <img src="tx.jpg">
+      </div>
+      <div class="slide">
+        <img src="tx.jpg">
+      </div>
+    </div>
+  </div>
+  <!--<script src="http://localhost:3000/static/app.js"></script>-->
+  <script src="slide.js"></script>
+<script>
+
+</script>
+</body>
+</html>
