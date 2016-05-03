@@ -102,7 +102,7 @@ var MySlide = function () {
       var duration = +new Date() - this.start.time;
 
       var absX = Math.abs(delta.x);
-      var slideNumToMove = Math.round(absX / this.slideWidth);
+      var slideNumToMove = Math.round(absX / this.slideWidth + 0.2);
 
       var shouldMove = Number(duration) < 250 && absX > 20 || // if slide duration is less than 250ms  and if slide amt is greater than 20px
       slideNumToMove > 0;
@@ -186,6 +186,7 @@ var slide1 = new MySlide(container, {
   elementWidth: width,
   slideWidth: width / 4,
   validIndexRange: [0, 4 - 1], //[0,-3]
+  speed: 0,
   moveCallback: function moveCallback(delta) {
     slide2.move(-delta.x * 4);
   },
@@ -198,6 +199,7 @@ var slide2 = new MySlide(container2, {
   slidesNum: 4,
   elementWidth: width * 4,
   slideWidth: width,
+  speed: 0,
   // validIndexRange:[-3,0],
   moveCallback: function moveCallback(delta) {
     slide1.move(-delta.x / 4);
