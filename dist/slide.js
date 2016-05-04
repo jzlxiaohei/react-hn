@@ -19,7 +19,8 @@ var MySlide = function () {
 
     this.elementWidth = options.elementWidth;
     this.slideWidth = options.slideWidth;
-    this.speed = options.speed === undefined ? 300 : options.speed;
+    this.moveSpeed = options.moveSpeed === undefined ? 0 : options.moveSpeed;
+    this.endSpeed = options.endSpeed === undefined ? 200 : options.endSpeed;
 
     this.moveCallback = options.moveCallback || noop;
     this.endCallback = options.endCallback || noop;
@@ -28,9 +29,12 @@ var MySlide = function () {
     this._onEnd = this.onTouchend.bind(this);
 
     this.validIndexRange = options.validIndexRange || [1 - this.slidesNum, 0];
-    this.minIndex = this.validIndexRange[0], this.maxIndex = this.validIndexRange[1];
-    this.minX = this.minIndex * this.slideWidth, this.maxX = this.maxIndex * this.slideWidth;
+    this.minIndex = this.validIndexRange[0];
+    this.maxIndex = this.validIndexRange[1];
+    this.minX = this.minIndex * this.slideWidth;
+    this.maxX = this.maxIndex * this.slideWidth;
 
+    this.extraMovePlugPoint = options.extraMovePlugPoint || 0.2;
     this.setup();
     this.move();
   }
@@ -38,10 +42,9 @@ var MySlide = function () {
   _createClass(MySlide, [{
     key: 'setSpeed',
     value: function setSpeed(speed) {
-      var _speed = speed === undefined ? this.speed : speed;
       var element = this.element;
       var style = element.style;
-      style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = _speed + 'ms';
+      style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = speed + 'ms';
     }
   }, {
     key: 'setup',
@@ -49,7 +52,7 @@ var MySlide = function () {
       var _this = this;
 
       //container width,
-      this.setSpeed();
+
       var element = this.element;
       var style = element.style;
       style.width = this.elementWidth + 'px';
@@ -66,6 +69,7 @@ var MySlide = function () {
   }, {
     key: 'onTouchstart',
     value: function onTouchstart(event) {
+      this.setSpeed(this.moveSpeed);
       var touches = event.touches[0];
       this.start = {
         x: touches.pageX,
@@ -84,7 +88,6 @@ var MySlide = function () {
       if (event.touches.length > 1 || event.scale && event.scale !== 1) return;
       //if(options.disableScroll)
 
-      // this.setSpeed(0)
       var touches = event.touches[0];
       var start = this.start;
       var delta = this.delta = {
@@ -101,18 +104,17 @@ var MySlide = function () {
         //横向滑动为主,禁掉scroll. needed ?
         event.preventDefault();
         this.move(delta.x);
+        this.moveCallback(delta, event);
       }
-      this.moveCallback(delta, event);
     }
   }, {
     key: 'onTouchend',
     value: function onTouchend(event) {
-      // this.setSpeed()
       var delta = this.delta;
       var duration = +new Date() - this.start.time;
 
       var absX = Math.abs(delta.x);
-      var slideNumToMove = Math.round(absX / this.slideWidth + 0.2);
+      var slideNumToMove = Math.round(absX / this.slideWidth + this.extraMovePlugPoint);
 
       var shouldMove = Number(duration) < 250 && absX > 20 || // if slide duration is less than 250ms  and if slide amt is greater than 20px
       slideNumToMove > 0;
@@ -128,12 +130,13 @@ var MySlide = function () {
         }
       }
       this.normalizeIndex();
+
+      this.setSpeed(this.endSpeed);
       this.move();
+      this.endCallback(this.index, delta, event);
 
       this.container.removeEventListener('touchmove', this._onMove);
       this.container.removeEventListener('touchend', this._onEnd);
-
-      this.endCallback(this.index, delta, event);
     }
   }, {
     key: 'move',
@@ -157,8 +160,15 @@ var MySlide = function () {
       }
     }
   }, {
-    key: 'slide',
-    value: function slide(to) {
+    key: 'moveTo',
+    value: function moveTo(x) {
+      this.setSpeed(this.moveSpeed);
+      this.move(x);
+    }
+  }, {
+    key: 'endTo',
+    value: function endTo(to) {
+      this.setSpeed(this.endSpeed);
       this.index = to;
       this.normalizeIndex();
       this.move();
@@ -196,12 +206,13 @@ var slide1 = new MySlide(container, {
   elementWidth: width,
   slideWidth: width / 4,
   validIndexRange: [0, 4 - 1], //[0,-3]
-  speed: 200,
+  moveSpeed: 0,
+  endSpeed: 200,
   moveCallback: function moveCallback(delta) {
-    slide2.move(-delta.x * 4);
+    slide2.moveTo(-delta.x * 4);
   },
   endCallback: function endCallback(index) {
-    slide2.slide(-index);
+    slide2.endTo(-index);
   }
 });
 
@@ -209,12 +220,13 @@ var slide2 = new MySlide(container2, {
   slidesNum: 4,
   elementWidth: width * 4,
   slideWidth: width,
-  speed: 200,
+  moveSpeed: 0,
+  endSpeed: 200,
   // validIndexRange:[-3,0],
   moveCallback: function moveCallback(delta) {
-    slide1.move(-delta.x / 4);
+    slide1.moveTo(-delta.x / 4);
   },
   endCallback: function endCallback(index) {
-    slide1.slide(-index);
+    slide1.endTo(-index);
   }
 });
